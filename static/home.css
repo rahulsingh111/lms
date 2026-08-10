@@ -1,7 +1,1 @@
-.welcome {
-	    margin: 0 auto;
-}
-
-.welcome h1 {
-	font-size: 3.5em;
-}
+/* Page-specific styles are kept in style.css. This file remains for compatibility with existing templates. */

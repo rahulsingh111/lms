@@ -1,48 +1,5 @@
-{%extends "/shared/layout.html" %}
-
-{% block title %}Signup{% endblock %}
-
-{% block head %}
-	{{ super() }}
-
-    <link rel="stylesheet" href="/static/home.css" />
-{% endblock %}
-
+{% extends "/shared/layout.html" %}
+{% block title %}Create account — Libra{% endblock %}
 {% block content %}
-	<div class="container d-flex h-75">
-	    <div class="row justify-content-center align-self-center welcome">
-			<h4>SIGNUP</h4>
-
-			<div style="width:90%">
-			{% if msg %}
-				<div class="alert alert-success">
-					{{msg}}
-				</div>
-			{% endif %}
-			{% if error %}
-				<div class="alert alert-danger">
-					{{error}}
-				</div>
-			{% endif %}
-			<form action="/signup" method="POST">
-			  <div class="form-group">
-			    <label for="name">Name</label>
-			    <input type="text" class="form-control" id="name" name="name" aria-describedby="name" placeholder="Your name">
-			  </div>
-			  <div class="form-group">
-			    <label for="email">Email address</label>
-			    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email address">
-			    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-			  </div>
-			  <div class="form-group">
-			    <label for="password">Password</label>
-			    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-			  </div>
-
-			  <button type="submit" class="btn btn-primary">Signup</button>
-			  	<!-- <a style="margin-left: 10px" href="/signup">Or join us now!</a> -->
-			</form>
-			</div>
-	    </div>
-	</div>
+<div class="auth-page"><div class="auth-card"><div class="auth-brand"><span class="brand-mark"><i class="bi bi-book-half"></i></span><span>Join the library</span></div><h1>Create your account</h1><p class="auth-subtitle">A better way to discover and reserve books.</p>{% if msg %}<div class="flash-success"><i class="bi bi-check-circle-fill"></i>{{msg}}</div>{% endif %}{% if error %}<div class="flash-error"><i class="bi bi-exclamation-circle"></i>{{error}}</div>{% endif %}<form action="/signup" method="POST"><label>Your name<input type="text" name="name" required placeholder="Rahul Singh"></label><label>Email address<input type="email" name="email" required placeholder="you@example.com"></label><label>Password<input type="password" name="password" required placeholder="Create a password"></label><button class="primary-btn" type="submit">Create account <i class="bi bi-arrow-right"></i></button></form><p class="auth-footer">Already a member? <a href="/signin">Sign in</a></p></div></div>
 {% endblock %}

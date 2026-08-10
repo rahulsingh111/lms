@@ -1,52 +1,43 @@
-<html>
-<!-- What the page is called in the tab bar  -->
-<!-- We will add out stylsheet here later -->
+<!doctype html>
+<html lang="en">
 <head>
-	{%block head %}
-	<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="/static/bootstrap.min.css" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-	
-    <link rel="stylesheet" href="/static/style.css" />
-	
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    {% endblock %}
+  {% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Library Management System{% endblock %}</title>
+  <link rel="stylesheet" href="/static/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="/static/style.css">
+  {% endblock %}
 </head>
-<!-- Put some text on the page -->
-<body {{"class=home" if g and g.bg==1 else ""}}>
-	<div class="container-fluid">
-		<div class="navbar justify-content-end mb-5">
-			<ul class="nav">
-			  <li class="nav-item">
-			    <a class="nav-link active" href="/">Home</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="/books">Books</a>
-			  </li>
-			  {% if g and g.user %}
-				  <li class="nav-item">
-				    <a class="nav-link" href="/user/">Profile</a>
-				  </li>
-				  <li class="nav-item">
-				    <a class="nav-link" href="/signout/">Signout</a>
-				  </li>
-			  {% else %}
-				  <li class="nav-item">
-				    <a class="nav-link" href="/signin">Signin</a>
-				  </li>
-				  <li class="nav-item">
-				    <a class="nav-link" href="/signup">Signup</a>
-				  </li>
-			  {% endif %}
-			</ul>
-		</div>
+<body class="app-body {{ 'home-page' if g and g.bg==1 else '' }}">
+  <nav class="topbar">
+    <div class="nav-shell">
+      <a class="brand" href="/">
+        <span class="brand-mark"><i class="bi bi-book-half"></i></span>
+        <span><strong>Libra</strong><small>LMS</small></span>
+      </a>
+      <div class="nav-links">
+        <a class="nav-link {{ 'active' if request.path == '/' else '' }}" href="/"><i class="bi bi-grid-1x2"></i> Home</a>
+        <a class="nav-link {{ 'active' if request.path.startswith('/books') else '' }}" href="/books/"><i class="bi bi-collection"></i> Explore</a>
+        {% if g and g.user %}
+          <a class="nav-link {{ 'active' if request.path.startswith('/user') else '' }}" href="/user/"><i class="bi bi-person-circle"></i> Profile</a>
+          <a class="nav-cta" href="/signout/"><i class="bi bi-box-arrow-right"></i> Sign out</a>
+        {% else %}
+          <a class="nav-link" href="/signin"><i class="bi bi-box-arrow-in-right"></i> Sign in</a>
+          <a class="nav-cta" href="/signup">Get started</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
 
-		{%block content %}{% endblock %}
-	</div>
+  <main class="page-shell">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div><span class="brand-dot"></span> Libra Library Management System</div>
+    <div>Discover · Reserve · Read</div>
+  </footer>
 </body>
 </html>

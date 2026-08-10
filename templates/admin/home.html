@@ -1,27 +1,7 @@
-{%extends "/shared/admin_layout.html" %}
-
-{% block title %}Admin Home{% endblock %}
-
-{% block head %}
-	{{ super() }}
-
-    <link rel="stylesheet" href="/static/home.css" />
-{% endblock %}
-
+{% extends "/shared/admin_layout.html" %}
+{% block title %}Admin Dashboard — Libra{% endblock %}
 {% block content %}
-	<div class="container d-flex h-75">
-	    <div class="row justify-content-center align-self-center welcome">
-	    	<h3>WELCOME</h3>
-			<div style="width:100%">
-			<form action="/admin/books/search" method="GET">
-			  <div class="form-group">
-			    <label for="exampleInputEmail1">Search</label>
-			    <input type="search" name="keyword" autofocus class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Search for books...">
-			    <small id="emailHelp" class="form-text text-muted">Available books will be shown to members.</small>
-			  </div>
-			  <button type="submit" class="btn btn-primary">Search</button>
-			</form>
-			</div>
-	    </div>
-	</div>
+<div class="admin-hero"><div><span class="eyebrow">LIBRARY CONTROL CENTER</span><h1>Good to see you, Admin.</h1><p>Manage books, members and the collection from one place.</p></div><div class="admin-hero-icon"><i class="bi bi-speedometer2"></i></div></div>
+<div class="admin-actions"><a href="/admin/books/" class="admin-action"><i class="bi bi-collection"></i><div><strong>Manage books</strong><span>View, edit and remove books</span></div><i class="bi bi-arrow-up-right"></i></a><a href="/admin/books/add" class="admin-action"><i class="bi bi-journal-plus"></i><div><strong>Add a book</strong><span>Add new titles to the collection</span></div><i class="bi bi-arrow-up-right"></i></a><a href="/admin/users/view/" class="admin-action"><i class="bi bi-people"></i><div><strong>Manage members</strong><span>Review registered users</span></div><i class="bi bi-arrow-up-right"></i></a></div>
+<div class="admin-search"><span class="eyebrow">QUICK SEARCH</span><form action="/admin/books/search" method="GET"><i class="bi bi-search"></i><input name="keyword" placeholder="Search the library..."><button class="primary-btn" type="submit">Search</button></form></div>
 {% endblock %}

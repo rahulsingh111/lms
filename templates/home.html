@@ -1,27 +1,31 @@
-{%extends "/shared/layout.html" %}
-
-{% block title %}Home{% endblock %}
-
-{% block head %}
-	{{ super() }}
-
-    <link rel="stylesheet" href="/static/home.css" />
-{% endblock %}
-
+{% extends "/shared/layout.html" %}
+{% block title %}Libra — Library Management System{% endblock %}
 {% block content %}
-	<div class="container d-flex h-75">
-	    <div class="row justify-content-center align-self-center welcome">
-	    	<h3>WELCOME</h3>
-			<div style="width:100%">
-			<form action="/books/search" method="GET">
-			  <div class="form-group">
-			    <label for="exampleInputEmail1">Search</label>
-			    <input type="search" autocomplete="false" name="keyword" autofocus class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Search for books...">
-			    <small id="emailHelp" class="form-text text-muted">Available books will be shown to members.</small>
-			  </div>
-			  <button type="submit" class="btn btn-primary">Search</button>
-			</form>
-			</div>
-	    </div>
-	</div>
+<section class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow"><i class="bi bi-stars"></i> Your digital library</span>
+    <h1>Find your next<br><span>great read.</span></h1>
+    <p>Explore the collection, discover new authors, and reserve books in seconds.</p>
+    <form class="hero-search" action="/books/search" method="GET">
+      <i class="bi bi-search"></i>
+      <input type="search" name="keyword" autocomplete="off" placeholder="Search books, authors, topics..." aria-label="Search books">
+      <button type="submit">Search</button>
+    </form>
+    <div class="hero-pills">
+      <span><i class="bi bi-lightning-charge-fill"></i> Fast search</span>
+      <span><i class="bi bi-bookmark-check-fill"></i> Easy reservations</span>
+      <span><i class="bi bi-shield-check"></i> Member accounts</span>
+    </div>
+  </div>
+  <div class="hero-art">
+    <div class="floating-card card-one"><i class="bi bi-book"></i><strong>Explore</strong><small>Curated collection</small></div>
+    <div class="book-stack"><span></span><span></span><span></span><span></span></div>
+    <div class="floating-card card-two"><i class="bi bi-bookmark-heart"></i><strong>Reserve</strong><small>Save your next read</small></div>
+  </div>
+</section>
+<section class="feature-row">
+  <div><div class="feature-icon"><i class="bi bi-search"></i></div><h3>Search smarter</h3><p>Find books by title, author or keyword.</p></div>
+  <div><div class="feature-icon"><i class="bi bi-journal-bookmark"></i></div><h3>Reserve instantly</h3><p>Keep your selected books in your personal shelf.</p></div>
+  <div><div class="feature-icon"><i class="bi bi-person-check"></i></div><h3>One simple account</h3><p>Manage your profile and reservations from one place.</p></div>
+</section>
 {% endblock %}

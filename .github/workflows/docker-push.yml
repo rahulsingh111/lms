@@ -22,4 +22,6 @@ jobs:
               with:
                 context: .
                 push: true
-                tags: ${{ vars.DOCKERHUB_USERNAME }}/lms:latest
+                tags: | 
+                    ${{ vars.DOCKERHUB_USERNAME }}/lms:latest
+                    ${{ secrets.DOCKER_USERNAME }}/lms:sha-${{ github.sha }}

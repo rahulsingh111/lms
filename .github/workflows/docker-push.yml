@@ -1,4 +1,4 @@
-name: pushing to dockerhb
+name: pushing to dockerhub
 on:
     push:
         branches:

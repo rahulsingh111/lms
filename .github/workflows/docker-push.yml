@@ -1,0 +1,24 @@
+name: pushing to dockerhb
+on:
+    push:
+        branches:
+            - main
+jobs:
+    check-code:
+        runs-on: ubuntu-latest
+        steps:
+            - name: check code
+              uses: actions/checkout@v7
+
+            - name: login to dockerhub
+              uses: docker/login-action@v4
+              with:
+                username: ${{ vars.DOCKERHUB_USERNAME }}
+                password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+            - name: build and push
+              uses: docker/build-push-action@v7
+              with:
+                context: .
+                push: true
+                tags: user/app:latest

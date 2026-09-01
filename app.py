@@ -28,6 +28,17 @@ app.register_blueprint(create_admin_blueprint(DAO))
 def health():
     return {'status': 'ok'}, 200
 
+@app.get('/api/status')
+def api_status():
+    return {
+        'service': 'library-management-system',
+        'status': 'running',
+        'version': '1.0.0'
+    }, 200
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

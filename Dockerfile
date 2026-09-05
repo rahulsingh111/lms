@@ -1,4 +1,4 @@
-FROM python:3.14.5
+FROM cgr.dev/chainguard/python:3.14.7
 RUN apt-get update \
     && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*

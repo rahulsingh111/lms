@@ -1,0 +1,50 @@
+name: reusabledocker
+on:
+    workflow_call:
+      inputs:
+        image_name:
+            type: string
+            
+        tag:
+            required: true
+            type: string
+
+            
+      secrets:
+        docker_username:
+            required: true
+        docker_token:
+            required: true
+
+      outputs:
+        image_url:
+            value: ${{ jobs.docker.outputs.image_url }}
+jobs:
+    docker:
+        runs-on: ubuntu-latest
+
+        outputs:
+            image_url: ${{ steps.image.outputs.image_url }}
+
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v4
+
+            - name: login to dockerhub
+              uses: docker/login-action@v4
+              with:
+                username: ${{ vars.DOCKERHUB_USERNAME }}
+                password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+            - name: build and push
+              uses: docker/build-push-action@v7
+              with:
+                context: .
+                push: true
+                tags: |
+                    ${{ vars.DOCKERHUB_USERNAME }}/myapp:latest
+                    ${{ vars.DOCKERHUB_USERNAME }}/myapp:${{ github.sha }}
+
+            - name: Set image URL
+              id: image
+              run: echo "image_url=${{ inputs.image_name }}:${{ inputs.tag }}" >> "$GITHUB_OUTPUT"

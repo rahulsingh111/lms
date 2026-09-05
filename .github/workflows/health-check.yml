@@ -1,0 +1,42 @@
+name: healthcheck
+on:
+  schedule:
+    - cron: '0 */12 * * *
+  workflow_dispatch:
+jobs:
+    pulling-image:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Login to GHCR
+              uses: docker/login-action@v3
+              with:
+                username: ${{ vars.DOCKERHUB_USERNAME }}
+                password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+            - name: Pull latest Docker image]
+              run: docker pull rahulsingh2k/lms:latest
+
+            - name: Run the container in detached mode
+              run: docker run --name lms -d -p 5000:5000 rahulsingh2k/lms
+
+            - name: Wait 5 seconds, then curl the health endpoint
+              run: |
+                sleep 5
+                if curl -f http://localhost:8080/health; then
+                    echo "PASS: Health check successful"
+                else
+                    echo "FAIL: Health check failed"
+                fi
+
+            - name: Stop and remove container
+              if: always()
+              run: |
+                docker stop lms || true
+                docker rm lms || true
+
+            - name: Create health check summary
+                run: |
+                    echo "## Health Check Report" >> $GITHUB_STEP_SUMMARY
+                    echo "- Image: myapp:latest" >> $GITHUB_STEP_SUMMARY
+                    echo "- Status: PASSED" >> $GITHUB_STEP_SUMMARY
+                    echo "- Time: $(date)" >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,27 @@
+name: main-pipeline
+on:
+    push:
+        branches:
+            - main
+jobs:
+    build-test-call:
+        uses: ./.github/workflows/reusable-build-test.yml
+        with:
+            run_tests: true
+
+    call-docker-workflow:
+        needs: build-test-call
+        uses: ./.github/workflows/reusable-docker.yml
+        with:
+            image_name: rahulsingh2k/lms
+            tag: latest
+        secrets:
+            inherit
+
+    deploy:
+        needs: call-docker-workflow
+        runs-on: ubuntu-latest
+        run: 'echo Deploying image: ${{ needs.build.outputs.image-tag }} to production'
+        environment: production
+
+    

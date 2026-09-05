@@ -16,7 +16,8 @@ jobs:
             image_name: rahulsingh2k/lms
             tag: latest
         secrets:
-            inherit
+            DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
+            DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
     deploy:
         needs: call-docker-workflow

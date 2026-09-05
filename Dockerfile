@@ -1,15 +1,16 @@
-FROM python:3.11-slim
+FROM python:3.11-slim-bookworm AS builder
 
-WORKDIR /app
-
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
+WORKDIR /build
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN mkdir -p /install \
+    && pip install --no-cache-dir \
+       --prefix=/install \
+       -r requirements.txt
 
+
+FROM cgr.dev/chainguard/python:latest
+WORKDIR /app
+COPY --from=builder /install /usr/local
 COPY . .
-
 EXPOSE 5000
-
 CMD ["python", "app.py"]

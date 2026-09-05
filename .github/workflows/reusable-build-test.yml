@@ -1,0 +1,62 @@
+name: Reusable Build Test
+on:
+  workflow_call:
+    inputs:
+      python_version:
+        required: false
+        type: string
+        default: "3.11"
+
+      run_tests:
+        required: false
+        type: boolean
+        default: true
+
+    outputs:
+      test_result:
+        value: ${{ jobs.build-test.outputs.test_result }}
+
+jobs:
+    build-test:
+        runs-on: ubuntu-latest
+
+        outputs:
+            test_result: ${{ steps.result.outputs.test_result }}
+
+        steps:
+            - name: checkoutcode
+              uses: actions/checkout@v4
+            
+            - name: setup the language runtime
+              uses: actions/setup-python@v7
+              with:
+                python-version: ${{ inputs.python_version }}
+              
+            - name: install dependencies
+              run: |
+                pip install -r requirements.txt
+                python -m pip install --upgrade pip
+
+
+            - name: Run tests
+              id: tests
+              if: ${{ inputs.run_tests }}
+              continue-on-error: true
+              run: |
+                chmod +x tests/health_check.sh
+                ./tests/health_check.sh
+
+            - name: Set test result
+              id: result
+              if: always()
+              run: |
+                if [ "${{ inputs.run_tests }}" = "false" ]; then
+                    echo "test_result=passed" >> "$GITHUB_OUTPUT"
+                elif [ "${{ steps.tests.outcome }}" = "success" ]; then
+                    echo "test_result=passed" >> "$GITHUB_OUTPUT"
+                else
+                    echo "test_result=failed" >> "$GITHUB_OUTPUT"
+                fi
+                    
+
+                    

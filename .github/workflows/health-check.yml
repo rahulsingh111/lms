@@ -1,23 +1,24 @@
 name: healthcheck
 on:
   schedule:
-    - cron: '0 */12 * * *
+    - cron: '0 */12 * * *'
   workflow_dispatch:
+
 jobs:
     pulling-image:
         runs-on: ubuntu-latest
         steps:
-            - name: Login to GHCR
+            - name: Login to DockerHub
               uses: docker/login-action@v3
               with:
                 username: ${{ vars.DOCKERHUB_USERNAME }}
                 password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-            - name: Pull latest Docker image]
+            - name: Pull latest Docker image
               run: docker pull rahulsingh2k/lms:latest
 
             - name: Run the container in detached mode
-              run: docker run --name lms -d -p 5000:5000 rahulsingh2k/lms
+              run: docker run --name lms -d -p 5000:5000 rahulsingh2k/lms:latest
 
             - name: Wait 5 seconds, then curl the health endpoint
               run: |
@@ -35,7 +36,8 @@ jobs:
                 docker rm lms || true
 
             - name: Create health check summary
-                run: |
+              if: always()
+              run: |
                     echo "## Health Check Report" >> $GITHUB_STEP_SUMMARY
                     echo "- Image: myapp:latest" >> $GITHUB_STEP_SUMMARY
                     echo "- Status: PASSED" >> $GITHUB_STEP_SUMMARY

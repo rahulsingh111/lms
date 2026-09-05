@@ -21,7 +21,10 @@ jobs:
     deploy:
         needs: call-docker-workflow
         runs-on: ubuntu-latest
-        run: 'echo Deploying image: ${{ needs.build.outputs.image-tag }} to production'
         environment: production
+        steps:
+            - name: deploying
+              run: 'echo Deploying image: ${{ needs.build.outputs.image-tag }} to production'
+
 
     

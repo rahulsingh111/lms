@@ -1,20 +1,20 @@
-name: workflowcall
+name: Reusable Build Test
 on:
-    workflow_call:
-      inputs:
-        python_version:
-          required: false
-          type: string
-          default: "3.11"
+  workflow_call:
+    inputs:
+      python_version:
+        required: false
+        type: string
+        default: "3.11"
 
-        run_tests:
-          required: false
-          type: boolean
-          default: true
+      run_tests:
+        required: false
+        type: boolean
+        default: true
 
-      outputs:
-        test_result:
-          value: ${{ jobs.build-test.outputs.test_result }}
+    outputs:
+      test_result:
+        value: ${{ jobs.build-test.outputs.test_result }}
 
 jobs:
     build-test:

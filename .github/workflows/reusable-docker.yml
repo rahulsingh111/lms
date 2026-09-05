@@ -11,7 +11,7 @@ on:
 
             
       secrets:
-        DOCKERHUB_USER:
+        DOCKERHUB_USERNAME:
             required: true
         DOCKERHUB_TOKEN:
             required: true
